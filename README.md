@@ -1,8 +1,5 @@
 # **Trabalho Final - Algoritmos e Programação**
 
-| <font size="5">Modalidade</font> | <font size="5">Data de Entrega</font> |
-|:---:|:---:|
-| <font size="5">Pode ser feito<br>em duplas</font> | <font size="5">24/09/2021<br>(sexta-feira)</font> |
 
 ## **Sistema AmazonCC**
 
