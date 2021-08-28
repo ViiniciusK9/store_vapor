@@ -38,11 +38,21 @@ def verificar_cpf(num_cpf):
         return False
 
 
-def verificar_email(email):
-    if '@' in email and len(email) > 1:
+def verificar_email(email): 
+    if '@' in email and len(email) > 5 and ' ' not in email:
         return True
     else:
         return False
 
+
+def verificar_nome(nome):
+    a = nome.replace(' ', '')
+    if len(a) < 3:
+        return False
+    for letra in a:
+        if letra.isnumeric():
+            return False
+    return True
+                
 
 
