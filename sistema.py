@@ -37,3 +37,12 @@ def verificar_cpf(num_cpf):
     else:
         return False
 
+
+def verificar_email(email):
+    if '@' in email and len(email) > 1:
+        return True
+    else:
+        return False
+
+
+
