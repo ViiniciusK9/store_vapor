@@ -1,4 +1,0 @@
-
-vinicius,123456,@aaaaaaaaaa,457.399.400-95
-vinicius,123456,@aaaaaaaaaaaaaaa,457.399.400-95
-vinicius,123456,@aaaaaaaaa,457.399.400-95
