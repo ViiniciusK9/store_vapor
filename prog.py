@@ -43,7 +43,7 @@ class Store:
             self.op = input('Digite uma opção: ')
             
             if self.op == '1':
-                pass
+                self.ver_produtos()
             elif self.op == '2':
                 pass
             elif self.op == '3':
@@ -87,7 +87,7 @@ class Store:
     def verificar_usuario(self, cpf, senha):
         r_user = []
         
-        with open('user_register.txt','r') as arquivo:
+        with open('a_user_register.txt','r') as arquivo:
             for l in arquivo:
                 r_user.append(l.split(','))
 
@@ -97,4 +97,12 @@ class Store:
                     return True
             except IndexError:
                 pass
-        return False    
+        return False
+
+    
+    def ver_produtos(self):
+        produtos = []
+
+        with open('aprodutos.txt', 'r') as arquivo:
+            for l in arquivo:
+                produtos.append(l.split(','))

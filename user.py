@@ -51,14 +51,14 @@ class Cadastro:
 
 
     def registrar_usuario(self):
-        with open('user_register.txt','a') as arquivo:
+        with open('a_user_register.txt','a') as arquivo:
             arquivo.write(str(f'{self.novo_usuario.nome},{self.novo_usuario.senha},{self.novo_usuario.email},{self.novo_usuario.cpf.replace("-", "").replace(".", "").replace(" ", "")}')+'\n')
             
     
     def ler_cpf_existente(self, cpf):
         r_user = []
         
-        with open('user_register.txt','r') as arquivo:
+        with open('a_user_register.txt','r') as arquivo:
             for l in arquivo:
                 r_user.append(l.split(','))
 
@@ -74,7 +74,7 @@ class Cadastro:
     def ler_email_existente(self, email):
         r_user = []
         
-        with open('user_register.txt','r') as arquivo:
+        with open('a_user_register.txt','r') as arquivo:
             for l in arquivo:
                 r_user.append(l.split(','))
 
