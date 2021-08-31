@@ -1,39 +1,41 @@
-def verificar_cpf(num_cpf):
 
-    # limpar entrada
-    cpf = num_cpf.replace(' ', '').replace('-', '').replace('.', '')
+vetor = [[20, 2], [17, 1]]
 
-    # verifica se o cpf possui os número nescessarios
-    if len(cpf) != 11:
-        return False
 
-    # verifica se o cpf não possui digitos identicos
-    if cpf == cpf[::-1]:
-        return False
-
-    # verifica validade do cpf
-    j = 10
-    k = 11
+def ver_carrinho(vetor):
+    produtos = []
     sum = 0
-    for num in range(len(cpf)-2):
-        sum += int(cpf[num]) * j
-        j -= 1
-    j = sum % 11
-    if str(j) in '01':
-        j = 0
-    else:
-        j = 11 - j 
-    sum = 0
-    for num in range(len(cpf)-1):
-        sum += int(cpf[num]) * k
-        k -= 1
-    k = sum % 11
-    if str(k) in '01':
-        k = 0
-    else:
-        k = 11 - k
-    if j == int(cpf[9]) and k == int(cpf[10]):
-        return True
-    else:
-        return False
+    with open('a_produtos.txt', 'r') as arquivo:
+        for l in arquivo:
+            produtos.append(l.split(','))
+    
+    print('='*66)      
+    print('|Cód|  |Descrição|                                    |un| |Preço|')
+    print('='*66)
+        
+    for u in vetor:
+        for l in produtos:
+            if u[0] == int(l[0]):  
+                a = l[2].replace('\n', '')
+                sum += (u[1] * (float(l[1].replace('R$ ', ''))))
+                print(f'  {l[0]:<5}{a:<48}{u[1]}  {l[1]}')
+    
 
+    print('='*66)      
+    print(f'|Total:                                                 R$ {sum:.2f}|')
+    print('='*66)
+        
+
+
+
+ver_carrinho(vetor)
+
+
+
+
+'''
+print('='*66)      
+print('|Cód|  |Descrição|                                     |un||Preço|')
+print('='*66)
+print('='*66)
+'''

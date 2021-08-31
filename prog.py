@@ -1,6 +1,7 @@
 from os import error
 from user import Cadastro
 
+carrinho = []
 
 class Store:
     def __init__(self):
@@ -35,7 +36,7 @@ class Store:
         [1] - VER PRODUTOS
         [2] - VER CARRINHO
         [3] - PAGAR CONTA
-        [0] - SAIR
+        [0] - LOGOUT
         ''')
         print(self.linha())
 
@@ -49,7 +50,7 @@ class Store:
             elif self.op == '3':
                 pass
             elif self.op == '0':
-                self.exit()
+                self.menu_inicial()
             else:
                 print('Opção não encontrada.')
 
@@ -100,9 +101,74 @@ class Store:
         return False
 
     
-    def ver_produtos(self):
+    def ver_produtos(self,):
+
         produtos = []
 
-        with open('aprodutos.txt', 'r') as arquivo:
+        with open('a_produtos.txt', 'r') as arquivo:
             for l in arquivo:
                 produtos.append(l.split(','))
+        print('='*66)      
+        print('|Cód|  |Descrição|                                         |Preço|')
+        print('='*66)
+        for l in produtos:
+            a = l[2].replace('\n', '')
+            print(f'  {l[0]:<5}{a:<50}{l[1]}')
+        print('='*66)
+
+        print('''
+        [CÓD 1-20] - COLOCAR NO CARRINHO
+        [99] - VER CARRINHO
+        [0] - VOLTAR
+        ''')
+        print(self.linha())
+
+        while True:
+            self.op = input('Digite uma opção: ')
+            
+            if 1 <= int(self.op) <= 20 :
+                un = int(input(f'[{self.op}] - QUANTIDADE DE UNIDADES: '))
+                self.comprar(int(self.op), un)
+            elif self.op == '99':
+                self.ver_carrinho(carrinho)
+            elif self.op == '0':
+                self.menu_loja()
+            else:
+                print('Opção não encontrada.')
+
+    def ver_carrinho(self, vetor):
+        produtos = []
+        sum = 0
+        with open('a_produtos.txt', 'r') as arquivo:
+            for l in arquivo:
+                produtos.append(l.split(','))
+        
+        print('='*66)      
+        print('|Cód|  |Descrição|                                    |un| |Preço|')
+        print('='*66)
+            
+        for u in vetor:
+            for l in produtos:
+                if u[0] == int(l[0]):  
+                    a = l[2].replace('\n', '')
+                    sum += (u[1] * (float(l[1].replace('R$ ', ''))))
+                    print(f'  {l[0]:<5}{a:<48}{u[1]}  {l[1]}')
+        
+
+        print('='*66)      
+        print(f'|Total:                                                 R$ {sum:.2f}|')
+        print('='*66)
+        
+
+    def comprar(self, cod, un):
+        existe = 0
+        registro = []
+        for i in carrinho:
+            if i[0] == cod:
+                i[1] += un
+                existe = 1
+
+        if existe == 0:
+            registro.append(cod)
+            registro.append(un)
+            carrinho.append(registro)

@@ -3,7 +3,7 @@
 3,R$ 15.00,(Liga dos Foguetes)
 4,R$ 50.50,(Grande Roubo de Automoveis 5)
 5,R$ 35.00,(Nao virado)
-6,R$ 67.50,(Campos de Batalha de Jogadores Desconhecidos)
+6,R$ 67.50,(Campos de Batalha Desconhecido)
 7,R$ 123.00,(Necessidade de Rivais de Velocidades)
 8,R$ 39.99,(Albinao Online)
 9,R$ 99.00,(Longe Choro 5)

@@ -8,11 +8,12 @@ class User:
     senha = None
     conf_senha = None
     cpf = None
+    saldo = None
 
 class Cadastro:
     def __init__(self) -> None:
         self.novo_usuario = User()
-        
+        self.novo_usuario.saldo = 1000
         while True:
             a = self.novo_usuario.nome = input('Digite seu nome: ')
             if verificar.verificar_nome(a):
@@ -52,7 +53,7 @@ class Cadastro:
 
     def registrar_usuario(self):
         with open('a_user_register.txt','a') as arquivo:
-            arquivo.write(str(f'{self.novo_usuario.nome},{self.novo_usuario.senha},{self.novo_usuario.email},{self.novo_usuario.cpf.replace("-", "").replace(".", "").replace(" ", "")}')+'\n')
+            arquivo.write(str(f'{self.novo_usuario.nome},{self.novo_usuario.senha},{self.novo_usuario.email},{self.novo_usuario.cpf.replace("-", "").replace(".", "").replace(" ", "")},{self.novo_usuario.saldo}')+'\n')
             
     
     def ler_cpf_existente(self, cpf):
