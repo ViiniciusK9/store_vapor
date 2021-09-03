@@ -132,14 +132,14 @@ class Store:
         [99] - VER CARRINHO
         [0] - VOLTAR
         ''')
-        print(self.linha())
+        print('='*66)
 
         while True:
             self.op = input('Digite uma opção: ')
             
             if 1 <= int(self.op) <= 20 :
                 un = int(input(f'[{self.op}] - QUANTIDADE DE UNIDADES: '))
-                self.colocar_carrinho(self.op, un, produtos, usuario_atual)
+                self.colocar_carrinho(self.op, un, produtos, usuario_atual, carrinho)
             elif self.op == '99':
                 self.ver_carrinho(carrinho, produtos)
             elif self.op == '0':
@@ -148,7 +148,7 @@ class Store:
                 print('Opção não encontrada.')
 
 
-    def colocar_carrinho(self, cod, un, produtos, usuario_atual):
+    def colocar_carrinho(self, cod, un, produtos, usuario_atual, carrinho):
         saldo = float(usuario_atual[0][4])
         sum = 0
         registro = []
@@ -162,8 +162,8 @@ class Store:
                     usuario_atual[0][4] = float(usuario_atual[0][4]) - sum
                     existe = 0
                     for i in carrinho:
-                        if i[1] == cod:
-                            i[2] += un
+                        if i[0] == cod:
+                            i[1] += un
                             existe = 1
                     if existe == 0:
                         registro.append(cod)
@@ -184,10 +184,28 @@ class Store:
                     sum += item[1] * produto[1]
                     print(f'  {produto[0]:<5}{produto[2]:<47} {item[1]}  R$ {produto[1]}')
         
-
         print('='*66)      
         print(f'|Total:  {sum:>56.2f}|')
         print('='*66)
+
+
+        print('='*66)
+
+        print('''
+        [1] - EFETUAR PAGAMENTO
+        [0] - VOLTAR
+        ''')
+        print('='*66)
+
+        while True:
+            self.op = input('Digite uma opção: ')
+            
+            if self.op == '1':
+                self.efetuar_pagamento(usuario_atual[0][3], usuario_atual[0][4])
+            elif self.op == '0':
+                self.menu_loja()
+            else:
+                print('Opção não encontrada.')
 
 
     def efetuar_pagamento(self, cpf, novo_saldo):
@@ -204,3 +222,4 @@ class Store:
         with open('a_user_register.txt','w') as arquivo:
             for c in conta:
                 arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
+

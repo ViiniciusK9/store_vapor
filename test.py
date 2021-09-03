@@ -1,4 +1,4 @@
-novo_saldo = '500\n'
+novo_saldo = '1000\n'
 
 conta = []
 
