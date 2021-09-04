@@ -21,65 +21,71 @@ class Store:
         
 
     def menu_inicial(self):
+        self.linha()
         print('''
         [1] - CADASTRAR
         [2] - LOGIN
         [0] - SAIR
         ''')
-        print(self.linha())
+        self.linha()
 
         while True:
-            self.op = input('Digite uma opção: ')
+            self.opc = input('Digite uma opção: ')
             
-            if self.op == '1':
+            if self.opc == '1':
                 Cadastro()
-            elif self.op == '2':
+            elif self.opc == '2':
                 a = self.logar()
                 if a:
                     self.menu_loja()
-            elif self.op == '0':
+            elif self.opc == '0':
                 self.exit()
             else:
                 print('Opção não encontrada.')
 
 
     def menu_loja(self):
+        self.linha()
         print('''
         [1] - VER PRODUTOS
         [2] - VER CARRINHO
         [3] - EFETUAR PAGAMENTO
         [0] - LOGOUT
         ''')
-        print(self.linha())
+        self.linha()
 
         while True:
-            self.op = input('Digite uma opção: ')
+            opx = input('Digite uma opção: ')
             
-            if self.op == '1':
+            if opx == '1':
                 self.ver_produtos(produtos)
-            elif self.op == '2':
-                self.ver_carrinho(carrinho, produtos)
-            elif self.op == '3':
-                self.efetuar_pagamento(usuario_atual[0][3], usuario_atual[0][4])
-            elif self.op == '0':
+            elif opx == '2':
+                try:
+                    self.ver_carrinho(carrinho, produtos)
+                except UnboundLocalError:
+                    print('Seu carrinho esta vazio.')
+            elif opx == '3':
+                self.opcoes_pagamento()
+            elif opx == '0':
+                carrinho = []
                 self.menu_inicial()
             else:
                 print('Opção não encontrada.')
 
 
     def logo(self):
-        print(f'''{self.linha()}
-    __   __                          
-    \ \ / /  __ _   _ __   ___   _ _ 
-     \ V /  / _` | | '_ \ / _ \ | '_|
-      \_/   \__,_| | .__/ \___/ |_|  
-                   |_|               
-{self.linha()}''')
+        self.linha()
+        print(f'''
+                __   __                          
+                \ \ / /  __ _   _ __   ___   _ _ 
+                 \ V /  / _` | | '_ \ / _ \ | '_|
+                  \_/   \__,_| | .__/ \___/ |_|  
+                               |_|''')
 
 
     def linha(self):
-        return "=="*21
-
+        print('=='*33)
+        
 
     def exit(self):
         exit()
@@ -118,21 +124,21 @@ class Store:
     
     def ver_produtos(self, produtos):
         
-        print('='*66)      
+        self.linha()      
         print('|Cód|  |Descrição|                                         |Preço|')
-        print('='*66)
+        self.linha()
 
         for produto in produtos:
             print(f'  {produto[0]:<5}{produto[2]:<50}R$ {produto[1]}')
         
-        print('='*66)
+        self.linha()
 
         print('''
         [CÓD 1-20] - COLOCAR NO CARRINHO
         [99] - VER CARRINHO
         [0] - VOLTAR
         ''')
-        print('='*66)
+        self.linha()
 
         while True:
             self.op = input('Digite uma opção: ')
@@ -159,6 +165,7 @@ class Store:
                     print(f'Limite do seu saldo foi ultrapassado.')
                     return False
                 else:
+                    print(f'{un} unidades do cód {cod} foram adicionados ao carrinho.')
                     usuario_atual[0][4] = float(usuario_atual[0][4]) - sum
                     existe = 0
                     for i in carrinho:
@@ -174,56 +181,60 @@ class Store:
     def ver_carrinho(self, carrinho, produtos):
         
         sum = 0
-        print('='*66)      
+        self.linha()     
         print('|Cód|  |Descrição|                                    |un| |Preço|')
-        print('='*66)
+        self.linha()
+        try:
 
-        for item in carrinho:
-            for produto in produtos:
-                if item[0] == produto[0]:
-                    sum += item[1] * produto[1]
-                    print(f'  {produto[0]:<5}{produto[2]:<47} {item[1]}  R$ {produto[1]}')
+            for item in carrinho:
+                for produto in produtos:
+                    if item[0] == produto[0]:
+                        sum += item[1] * produto[1]
+                        print(f'  {produto[0]:<5}{produto[2]:<47} {item[1]}  R$ {produto[1]}')
+        except:
+            pass
         
-        print('='*66)      
+        self.linha()     
         print(f'|Total:  {sum:>56.2f}|')
-        print('='*66)
+        self.linha()
 
 
-        print('='*66)
+        self.linha()
 
         print('''
         [1] - EFETUAR PAGAMENTO
         [0] - VOLTAR
         ''')
-        print('='*66)
+        self.linha()
 
         while True:
-            self.op = input('Digite uma opção: ')
+            self.opa = input('Digite uma opção: ')
             
-            if self.op == '1':
+            if self.opa == '1':
                 self.opcoes_pagamento()
-            elif self.op == '0':
+            elif self.opa == '0':
                 self.menu_loja()
             else:
                 print('Opção não encontrada.')
 
 
     def opcoes_pagamento(self):
+        self.linha()
         print('''
         [1] - DESCONTAR DO SALDO
         [2] - PAGAR CONTA 
         [0] - VOLTAR
         ''')
-        print('='*66)
+        self.linha()
 
         while True:
-            self.op = input('Digite uma opção: ')
+            self.opr = input('Digite uma opção: ')
             
-            if self.op == '1':
+            if self.opr == '1':
                 self.descontar_saldo(usuario_atual[0][3], usuario_atual[0][4])
-            elif self.op == '2':
+            elif self.opr == '2':
                 self.pagar_conta(usuario_atual[0][3])
-            elif self.op == '3':
+            elif self.opr == '3':
                 self.menu_loja()
             else:
                 print('Opção não encontrada.')
@@ -244,7 +255,8 @@ class Store:
         with open('a_user_register.txt','w') as arquivo:
             for c in conta:
                 arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
-
+        print(f'Sua conta foi descontada, seu novo saldo é R$ {novo_saldo:.2f}')
+        self.menu_loja()
 
     def pagar_conta(self, cpf):
     
@@ -262,4 +274,5 @@ class Store:
             for c in conta:
                 arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
 
-
+        print(f'Sua conta foi paga, seu novo saldo é de R$ 1.000,00')
+        self.menu_loja()

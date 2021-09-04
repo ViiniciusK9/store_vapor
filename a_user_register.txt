@@ -1,2 +1,2 @@
-vinicius,123456,@aaaaaaaa,15157477007,1000
+vinicius,123456,@aaaaaaaa,15157477007,900.01
 

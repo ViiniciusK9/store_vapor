@@ -86,13 +86,3 @@ class Cadastro:
             except IndexError:
                 pass
         return True    
-
-
-
-
-
-
-
-
-
-
