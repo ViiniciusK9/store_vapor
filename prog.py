@@ -201,14 +201,36 @@ class Store:
             self.op = input('Digite uma opção: ')
             
             if self.op == '1':
-                self.efetuar_pagamento(usuario_atual[0][3], usuario_atual[0][4])
+                self.opcoes_pagamento()
             elif self.op == '0':
                 self.menu_loja()
             else:
                 print('Opção não encontrada.')
 
 
-    def efetuar_pagamento(self, cpf, novo_saldo):
+    def opcoes_pagamento(self):
+        print('''
+        [1] - DESCONTAR DO SALDO
+        [2] - PAGAR CONTA 
+        [0] - VOLTAR
+        ''')
+        print('='*66)
+
+        while True:
+            self.op = input('Digite uma opção: ')
+            
+            if self.op == '1':
+                self.descontar_saldo(usuario_atual[0][3], usuario_atual[0][4])
+            elif self.op == '2':
+                self.pagar_conta(usuario_atual[0][3])
+            elif self.op == '3':
+                self.menu_loja()
+            else:
+                print('Opção não encontrada.')
+
+
+    def descontar_saldo(self, cpf, novo_saldo):
+    
         conta = []
         with open('a_user_register.txt','r') as arquivo:
             for linha in arquivo:
@@ -222,4 +244,22 @@ class Store:
         with open('a_user_register.txt','w') as arquivo:
             for c in conta:
                 arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
+
+
+    def pagar_conta(self, cpf):
+    
+        conta = []
+        with open('a_user_register.txt','r') as arquivo:
+            for linha in arquivo:
+                a = linha.split(',')
+                if len(a) < 5:
+                    continue
+                if a[3] == str(cpf):
+                    a[4] = str(1000) + '\n'
+                conta.append(a)
+
+        with open('a_user_register.txt','w') as arquivo:
+            for c in conta:
+                arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
+
 
