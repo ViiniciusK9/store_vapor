@@ -1,5 +1,6 @@
-from os import error
+import os
 from user import Cadastro
+
 
 carrinho = []
 produtos = []
@@ -60,14 +61,10 @@ class Store:
             if opx == '1':
                 self.ver_produtos(produtos)
             elif opx == '2':
-                try:
-                    self.ver_carrinho(carrinho, produtos)
-                except UnboundLocalError:
-                    print('Seu carrinho esta vazio.')
+                self.ver_carrinho(carrinho, produtos)
             elif opx == '3':
                 self.opcoes_pagamento()
             elif opx == '0':
-                carrinho = []
                 self.menu_inicial()
             else:
                 print('Opção não encontrada.')
