@@ -4,6 +4,6 @@ from prog import Store
 a = Store()
 # compras
 
-# mostrar carrinho
+# mostrar carrinho oi
 
 # pagar conta
