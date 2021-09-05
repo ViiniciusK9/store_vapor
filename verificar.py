@@ -47,12 +47,9 @@ def verificar_email(email):
 
 def verificar_nome(nome):
     a = nome.replace(' ', '')
-    if len(a) < 3:
-        return False
-    for letra in a:
-        if letra.isnumeric():
-            return False
-    return True
+    if a.isalpha():
+        return True
+    return False
                 
 
 

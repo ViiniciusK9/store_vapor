@@ -258,6 +258,7 @@ class Store:
         print(f'Sua conta foi descontada, seu novo saldo é R$ {novo_saldo:.2f}')
         self.menu_loja()
 
+
     def pagar_conta(self, cpf):
     
         conta = []
