@@ -51,6 +51,7 @@ class Store:
         [1] - VER PRODUTOS
         [2] - VER CARRINHO
         [3] - EFETUAR PAGAMENTO
+        [4] - MEUS DADOS
         [0] - LOGOUT
         ''')
         self.linha()
@@ -64,6 +65,8 @@ class Store:
                 self.ver_carrinho(carrinho, produtos)
             elif opx == '3':
                 self.opcoes_pagamento()
+            elif opx == '4':
+                self.meus_dados(usuario_atual)
             elif opx == '0':
                 carrinho.clear()
                 self.menu_inicial()
@@ -127,7 +130,7 @@ class Store:
         self.linha()
 
         for produto in produtos:
-            print(f'  {produto[0]:<5}{produto[2]:<50}R$ {produto[1]}')
+            print(f'  {produto[0]:<5}{produto[2]:<50}R$ {int(produto[1]):.2f}')
         
         self.linha()
 
@@ -199,7 +202,8 @@ class Store:
         self.linha()
 
         print('''
-        [1] - EFETUAR PAGAMENTO
+        [1] - REMOVER PRODUTO DO CARRINHO
+        [2] - EFETUAR PAGAMENTO 
         [0] - VOLTAR
         ''')
         self.linha()
@@ -208,6 +212,8 @@ class Store:
             self.opa = input('Digite uma opção: ')
             
             if self.opa == '1':
+                self.remover_produto(carrinho, usuario_atual[0][4])
+            elif self.opa == '2':
                 self.opcoes_pagamento()
             elif self.opa == '0':
                 self.menu_loja(carrinho)
@@ -277,3 +283,49 @@ class Store:
         usuario_atual[0][4] = '1000'
         carrinho.clear()
         self.menu_loja(carrinho)
+
+
+    def meus_dados(self, usuario):
+        self.linha()
+        print()
+        print(f'        Nome cadastrado: {usuario[0][0]}')
+        print(f'        Email cadastrado: {usuario[0][2]}')
+        print(f'        Cpf cadastrado: {self.cpf_formatado(usuario[0][3])}')
+        print(f'        Saldo atual: R$ {int(usuario[0][4]):.2f}')
+        print()
+        self.menu_loja(carrinho)
+
+
+    def cpf_formatado(self, cpf):
+        cpf_f = ''
+        c = 0
+        for i in cpf:
+            cpf_f += i
+            c+=1
+            if c == 3:
+                cpf_f += '.'
+            if c == 6:
+                cpf_f += '.'
+            if c == 9:
+                cpf_f += '-'
+        return cpf_f
+
+
+    def remover_produto(self, carrinho, saldo):
+        novo_carrinho = []
+        cod = input('Digite o código do produto: ')
+        un = input('Digite a quantidade que deseja remover: ')
+
+        for produto in carrinho:
+            if int(produto[0]) == int(cod):
+                if int(produto[1]) <= int(un):
+                    print('oi')
+                else:
+                    produto[1] = int(produto[1]) - int(un)
+                    novo_carrinho.append(produto)
+            else:
+                novo_carrinho.append(produto)
+        
+        carrinho = novo_carrinho
+        self.ver_carrinho(carrinho, produtos)
+
