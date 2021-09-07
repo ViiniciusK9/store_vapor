@@ -50,6 +50,5 @@ def verificar_nome(nome):
     if a.isalpha():
         return True
     return False
-                
 
-
+    

@@ -212,7 +212,7 @@ class Store:
             self.opa = input('Digite uma opção: ')
             
             if self.opa == '1':
-                self.remover_produto(carrinho, usuario_atual[0][4])
+                self.remover_produto(carrinho, usuario_atual[0][4], produtos, usuario_atual)
             elif self.opa == '2':
                 self.opcoes_pagamento()
             elif self.opa == '0':
@@ -244,45 +244,54 @@ class Store:
 
 
     def descontar_saldo(self, cpf, novo_saldo, carrinho):
-    
-        conta = []
-        with open('a_user_register.txt','r') as arquivo:
-            for linha in arquivo:
-                a = linha.split(',')
-                if len(a) < 5:
-                    continue
-                if a[3] == str(cpf):
-                    a[4] = str(novo_saldo) + '\n'
-                conta.append(a)
+        senha = input('Digite sua senha para confirmar o pagamento: ')
+        conf = self.conferir_senha(senha, cpf)
+        if conf:
+            conta = []
+            with open('a_user_register.txt','r') as arquivo:
+                for linha in arquivo:
+                    a = linha.split(',')
+                    if len(a) < 5:
+                        continue
+                    if a[3] == str(cpf):
+                        a[4] = str(novo_saldo) + '\n'
+                    conta.append(a)
 
-        with open('a_user_register.txt','w') as arquivo:
-            for c in conta:
-                arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
-        print(f'Sua conta foi descontada, seu novo saldo é R$ {int(novo_saldo):.2f}')
-        carrinho.clear()
-        self.menu_loja(carrinho)
-
+            with open('a_user_register.txt','w') as arquivo:
+                for c in conta:
+                    arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
+            print(f'Sua conta foi descontada, seu novo saldo é R$ {float(novo_saldo):.2f}')
+            carrinho.clear()
+            self.menu_loja(carrinho)
+        else:
+            print('Senha incorreta.')
+            self.descontar_saldo(usuario_atual[0][3], usuario_atual[0][4], carrinho)
 
     def pagar_conta(self, cpf, carrinho, usuario_atual):
-    
-        conta = []
-        with open('a_user_register.txt','r') as arquivo:
-            for linha in arquivo:
-                a = linha.split(',')
-                if len(a) < 5:
-                    continue
-                if a[3] == str(cpf):
-                    a[4] = str(1000) + '\n'
-                conta.append(a)
+        senha = input('Digite sua senha para confirmar o pagamento: ')
+        conf = self.conferir_senha(senha, cpf)
+        if conf:
+            conta = []
+            with open('a_user_register.txt','r') as arquivo:
+                for linha in arquivo:
+                    a = linha.split(',')
+                    if len(a) < 5:
+                        continue
+                    if a[3] == str(cpf):
+                        a[4] = str(1000) + '\n'
+                    conta.append(a)
 
-        with open('a_user_register.txt','w') as arquivo:
-            for c in conta:
-                arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
+            with open('a_user_register.txt','w') as arquivo:
+                for c in conta:
+                    arquivo.write(str(f'{c[0]},{c[1]},{c[2]},{c[3]},{c[4]}')+'\n')
 
-        print(f'Sua conta foi paga, seu novo saldo é de R$ 1.000,00')
-        usuario_atual[0][4] = '1000'
-        carrinho.clear()
-        self.menu_loja(carrinho)
+            print(f'Sua conta foi paga, seu novo saldo é de R$ 1.000,00')
+            usuario_atual[0][4] = '1000'
+            carrinho.clear()
+            self.menu_loja(carrinho)
+        else:
+            print('Senha incorreta.')
+            self.pagar_conta(usuario_atual[0][3], carrinho, usuario_atual)
 
 
     def meus_dados(self, usuario):
@@ -311,21 +320,41 @@ class Store:
         return cpf_f
 
 
-    def remover_produto(self, carrinho, saldo):
+    def remover_produto(self, carrinho, saldo, produtos, usuario_atual):
         novo_carrinho = []
         cod = input('Digite o código do produto: ')
         un = input('Digite a quantidade que deseja remover: ')
 
-        for produto in carrinho:
-            if int(produto[0]) == int(cod):
-                if int(produto[1]) <= int(un):
-                    print('oi')
+        for prod in carrinho:
+            if int(prod[0]) == int(cod):
+                if int(prod[1]) <= int(un):
+                    un = int(prod[1])
+                    pass
                 else:
-                    produto[1] = int(produto[1]) - int(un)
-                    novo_carrinho.append(produto)
+                    prod[1] = int(prod[1]) - int(un)
+                    novo_carrinho.append(prod)
             else:
-                novo_carrinho.append(produto)
+                novo_carrinho.append(prod)
         
+        for produto in produtos:
+            if produto[0] == cod:
+                saldo += float(produto[1]) * int(un)
+        usuario_atual[0][4] = saldo
         carrinho = novo_carrinho
         self.ver_carrinho(carrinho, produtos)
 
+
+    def conferir_senha(self, senha, cpf):
+        r_user = []
+        
+        with open('a_user_register.txt','r') as arquivo:
+            for l in arquivo:
+                r_user.append(l.split(','))
+
+        for user in r_user:
+            try:
+                if str(user[3].replace('\n', '')) == str(cpf) and str(user[1].replace('\n', '')) == str(senha):
+                    return True
+            except IndexError:
+                pass
+        return False

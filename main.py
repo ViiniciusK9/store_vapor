@@ -7,3 +7,4 @@ a = Store()
 # mostrar carrinho oi
 
 # pagar conta
+
