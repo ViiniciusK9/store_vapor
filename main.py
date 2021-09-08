@@ -1,10 +1,5 @@
 from prog import Store
 
-# cadastrar novos clientes
+# Para iniciar o programa basta executar este arquivo.
+
 a = Store()
-# compras
-
-# mostrar carrinho oi
-
-# pagar conta
-
