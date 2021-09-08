@@ -46,8 +46,7 @@ def verificar_email(email):
 
 
 def verificar_nome(nome):
-    a = nome.replace(' ', '')
-    if a.isalpha():
+    if nome.isalpha():
         return True
     return False
 
