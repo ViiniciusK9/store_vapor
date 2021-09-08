@@ -1,3 +1,4 @@
-vinicius,123456,@aaaaaaaa,15157477007,1000
+vinicius,123456,@aaaaaaaa,15157477007,780.0
 
 maria,123456,maria@maria,27444017069,1000
+
