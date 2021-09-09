@@ -2,7 +2,7 @@ from os import error
 import verificar
 
 
-class User:
+class User: # estrutura para cadastrar um novo usuário. 
     nome = None
     email = None
     senha = None
@@ -10,7 +10,7 @@ class User:
     cpf = None
     saldo = None
 
-class Cadastro:
+class Cadastro: # classe para criar novos usuario, aqui sera soliciado e verificado todas as informações do usuário.
     def __init__(self) -> None:
         self.novo_usuario = User()
         self.novo_usuario.saldo = 1000
@@ -51,12 +51,12 @@ class Cadastro:
         self.registrar_usuario()
 
 
-    def registrar_usuario(self):
+    def registrar_usuario(self): # salvar informações solicitadas do novo usuário.
         with open('a_user_register.txt','a') as arquivo:
             arquivo.write(str(f'{self.novo_usuario.nome},{self.novo_usuario.senha},{self.novo_usuario.email},{self.novo_usuario.cpf.replace("-", "").replace(".", "").replace(" ", "")},{self.novo_usuario.saldo}')+'\n')
             
     
-    def ler_cpf_existente(self, cpf):
+    def ler_cpf_existente(self, cpf): # função para verificar se o cpf informado ja está cadastrado.
         r_user = []
         
         with open('a_user_register.txt','r') as arquivo:
@@ -72,7 +72,7 @@ class Cadastro:
         return True     
     
 
-    def ler_email_existente(self, email):
+    def ler_email_existente(self, email): # função para verificar se o email informado ja está cadastrado.
         r_user = []
         
         with open('a_user_register.txt','r') as arquivo:

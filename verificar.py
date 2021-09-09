@@ -1,18 +1,15 @@
 def verificar_cpf(num_cpf):
 
-    # limpar entrada
-    cpf = num_cpf.replace(' ', '').replace('-', '').replace('.', '')
+    
+    cpf = num_cpf.replace(' ', '').replace('-', '').replace('.', '') # limpa entrada.
 
-    # verifica se o cpf possui os número nescessarios
-    if len(cpf) != 11:
+    if len(cpf) != 11: # verifica se o cpf possui os número nescessarios.
         return False
 
-    # verifica se o cpf não possui digitos identicos
-    if cpf == cpf[::-1]:
+    if cpf == cpf[::-1]: # verifica se o cpf não possui digitos identicos.
         return False
 
-    # verifica validade do cpf
-    j = 10
+    j = 10 # verifica validade do cpf.
     k = 11
     sum = 0
     for num in range(len(cpf)-2):
@@ -38,14 +35,14 @@ def verificar_cpf(num_cpf):
         return False
 
 
-def verificar_email(email): 
+def verificar_email(email): # verifica se o email é valido.
     if '@' in email and len(email) > 5 and ' ' not in email:
         return True
     else:
         return False
 
 
-def verificar_nome(nome):
+def verificar_nome(nome): # verifica se o nome é valido.
     if nome.isalpha():
         return True
     return False
