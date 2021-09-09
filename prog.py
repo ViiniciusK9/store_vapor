@@ -73,6 +73,7 @@ class Store:
                 self.meus_dados(usuario_atual)
             elif opx == '0':
                 carrinho.clear()
+                usuario_atual.clear()
                 self.menu_inicial()
             else:
                 print('Opção não encontrada.')
@@ -120,6 +121,7 @@ class Store:
                 if str(user[3].replace('\n', '')) == str(cpf) and str(user[1].replace('\n', '')) == str(senha):
                     user[4] = user[4].replace('\n', '')
                     usuario_atual.append(user)
+                    usuario_atual[0].append(user[4])
                     return True
             except IndexError:
                 pass
@@ -312,7 +314,8 @@ class Store:
         print(f'        Nome cadastrado: {usuario[0][0]}')
         print(f'        Email cadastrado: {usuario[0][2]}')
         print(f'        Cpf cadastrado: {self.cpf_formatado(usuario[0][3])}')
-        print(f'        Saldo atual: R$ {float(usuario[0][4]):.2f}')
+        print(f'        Saldo atual: R$ {self.saldo_atual(usuario[0][3]):.2f}')
+        print(f'        Saldo com produtos no carrinho: R$ {float(usuario[0][4]):.2f}')
         print()
         self.menu_loja(carrinho)
 
@@ -372,3 +375,18 @@ class Store:
             except IndexError:
                 pass
         return False
+    
+
+    def saldo_atual(self, cpf):
+        r_user = []
+        with open('a_user_register.txt','r') as arquivo:
+            for l in arquivo:
+                r_user.append(l.split(','))
+        
+        for user in r_user:
+            try:
+                if str(user[3].replace('\n', '')) == str(cpf):
+                    return float(user[4])
+            except IndexError:
+                pass
+        
