@@ -2,7 +2,7 @@ import os
 from user import Cadastro
 
 
-carrinho = [] # listas usadas para armazenar informações nesssesarias para o funcionamento do programa.
+carrinho = [] # listas usadas para armazenar informações necessárias para o funcionamento do programa.
 produtos = []
 usuario_atual = []
 
@@ -16,7 +16,7 @@ class Store:
         self.menu_inicial()
 
 
-    def i_produtos(self): # função para carregar os produtos que estão registrados no .txt e armazenalos em uma lista.
+    def i_produtos(self): # função para carregar os produtos que estão registrados no .txt e armazená-los em uma lista.
         with open('a_produtos.txt', 'r') as arquivo:
             for l in arquivo:
                 x = l.split(',')
@@ -350,16 +350,15 @@ class Store:
                 if int(prod[0]) == int(cod):
                     if int(prod[1]) <= int(un):
                         un = int(prod[1])
-                        pass
                     else:
                         prod[1] = int(prod[1]) - int(un)
                         novo_carrinho.append(prod)
+                    for produto in produtos:
+                        if produto[0] == cod:
+                            saldo += float(produto[1]) * int(un)
                 else:
                     novo_carrinho.append(prod)
             
-            for produto in produtos:
-                if produto[0] == cod:
-                    saldo += float(produto[1]) * int(un)
             usuario_atual[0][4] = saldo
             carrinho = novo_carrinho
             self.ver_carrinho(carrinho, produtos)
