@@ -219,7 +219,7 @@ class Store:
             self.opa = input('Digite uma opção: ')
             
             if self.opa == '1':
-                self.remover_produto(carrinho, usuario_atual[0][4], produtos, usuario_atual)
+                self.remover_produto(usuario_atual[0][4], produtos, usuario_atual)
             elif self.opa == '2':
                 self.opcoes_pagamento()
             elif self.opa == '0':
@@ -341,7 +341,8 @@ class Store:
         return cpf_f
 
 
-    def remover_produto(self, carrinho, saldo, produtos, usuario_atual): # função para remover produtos do carrinho.
+    def remover_produto(self, saldo, produtos, usuario_atual): # função para remover produtos do carrinho.
+        global carrinho
         novo_carrinho = []
         cod = input('Digite o código do produto: ')
         un = input('Digite a quantidade que deseja remover: ')
@@ -360,7 +361,7 @@ class Store:
                     novo_carrinho.append(prod)
             
             usuario_atual[0][4] = saldo
-            carrinho = novo_carrinho[:]
+            carrinho = novo_carrinho.copy()
             self.ver_carrinho(carrinho, produtos)
         else:
             print('Seu carrinho esta vazio.')
