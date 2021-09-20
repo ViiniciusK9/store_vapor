@@ -1,6 +1,5 @@
 def verificar_cpf(num_cpf):
 
-    
     cpf = num_cpf.replace(' ', '').replace('-', '').replace('.', '') # limpa entrada.
 
     if len(cpf) != 11: # verifica se o cpf possui os número nescessarios.

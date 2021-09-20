@@ -25,7 +25,7 @@ class Store:
                 produtos.append(x)
         
 
-    def menu_inicial(self): # menu inicial, onde possui as primeiras funcionalidades do programa.
+    def menu_inicial(self): # menu inicial, onde possui as primeiras funções do programa.
         self.linha()
         print('''
         [1] - CADASTRAR
@@ -166,6 +166,7 @@ class Store:
         saldo = float(usuario_atual[0][4])
         sum = 0
         registro = []
+
         for produto in produtos:
             if produto[0] == cod:
                 sum += (produto[1] * un)
@@ -187,7 +188,6 @@ class Store:
     
 
     def ver_carrinho(self, carrinho, produtos): # função para mostrar o carrinho do usuário.
-        
         sum = 0
         self.linha()     
         print('|Cód|  |Descrição|                                    |un| |Preço|')
